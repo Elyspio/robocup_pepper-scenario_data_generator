@@ -51,7 +51,16 @@ def create_global():
         sheet = book.sheet_by_name(sheet_name)
         data = []
         cols = []
-        for col in range(0, sheet.ncols):
+
+
+        def get_nb_useful_cols(sheet, index): 
+            if sheet.cell_value(0, index) == "":
+                return 0
+            return 1 + get_nb_useful_cols(sheet, index + 1)
+
+        nb_cols = get_nb_useful_cols(sheet, 0)
+
+        for col in range(0, nb_cols):
             cols.append(sheet.cell_value(1, col))
 
         for row in range(2, sheet.nrows):
@@ -117,7 +126,7 @@ def create_scenario(file_xlsx):
     speech_sheet = workbook.sheet_by_name('Speech')
     speech = []
 
-    for i in range(1, speech_sheet.nrows):
+    for i in range(1, steps_sheet.nrows):
         speech.append({
             "step": speech_sheet.cell_value(i, 0),
             "toSay": speech_sheet.cell_value(i, 1)
