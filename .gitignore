@@ -9,6 +9,7 @@ __pycache__/
 # Working files
 
 ~*
+!scenarios/~scenario_template.xlsx
 
 
 # Distribution / packaging
