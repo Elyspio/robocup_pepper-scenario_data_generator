@@ -28,4 +28,4 @@ We use .xlsx format to store our data, so you need to install [xlrd](https://pyp
 
 `python ./json_generator.py`
 
-Generated data will be located in the folder `./dist/`
+Generated data will be located in the folder `dist/`
