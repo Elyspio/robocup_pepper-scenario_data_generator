@@ -1,31 +1,39 @@
 # Robocup Pepper scenario data generator
 
-This repo contains a python script which creates json configuration files that we use in [General Manager](https://github.com/jacques-saraydaryan/robocup_pepper-general_mng) and [HRI](https://github.com/Elyspio/robocup_pepper-hri_meta).
+This repo contains Python scripts which create json configuration files that we use in [General Manager](https://github.com/jacques-saraydaryan/robocup_pepper-general_mng) and [HRI](https://github.com/Elyspio/robocup_pepper-hri_meta).
 
 
 ## Installation
 
 You can use Python 2 or Python 3.
 
-We use .xlsx format to store our data, so you need to install [xlrd](https://pypi.org/project/xlrd/) on your python installation
+We use .xlsx format to store our data, so you need to install [xlrd](https://pypi.org/project/xlrd/) and [Google API client](https://developers.google.com/drive/api/v3/quickstart/python) on your python installation
 
-`pip install xldr`
 
-> if you don't have root permissions use: `pip install --user xlrd`  
 
 
 ## Use
 
 > First clone the repo:
-
 `git clone https://github.com/Elyspio/robocup_pepper-scenario_data_generator.git data-generator`
  
 > Move to the repo locally:
-
 `cd data-generator`
+
+> Install dependencies: 
+`pip install -r requirement.txt`
+
+-  If you don't have root permissions use: `pip install --user requirement.txt`  
 
 > Then launch json_generator.py:
 
-`python ./json_generator.py`
+`python ./generator.py`
 
-Generated data will be located in the folder `dist/`
+### Options
+
+| Flag              | Args                      | Description                                                              |
+| ----------------- | ------------------------- | ------------------------------------------------------------------------ |
+| --local,  -l      | \<Path>                   | Indicates if local excel files will be used (need a path to root folder). |
+| --output, -o      | \<Path>                   | The output folder for generated jsons.                                   |
+| --online          | \<Google Drive folder id> | The folder id of the Google Drive scenarios root folder.                 |
+| --save-online, -s |                           | Indicates if excel files should be saved on disk.                        |
