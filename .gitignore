@@ -7,3 +7,6 @@ token.pickle
 credentials.json
 .idea
 *.pyc
+.vscode
+jsons
+excels

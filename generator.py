@@ -17,7 +17,6 @@ parser.add_argument("--save-online", "-s", dest="store", action="store_true", he
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    print args
 
     if args.local:
         JsonGenerator(args.local, args.output)
@@ -27,5 +26,7 @@ if __name__ == '__main__':
         if not args.store:
             print ("Deleting temporary excel files")
             shutil.rmtree(DEFAULT_EXCEL_PATH)
+
+
 
     print("Generation complete, see the folder", args.output)

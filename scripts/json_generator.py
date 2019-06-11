@@ -4,8 +4,10 @@ import sys
 
 import xlrd
 
+
+
 scenarios_excels_directory = 'scenarios'
-global_excels_path = 'global.xlsx'
+global_excels_path = 'Global.xlsx'
 
 old_cell_value = xlrd.sheet.Sheet.cell_value
 
@@ -91,7 +93,7 @@ def create_global(excel_folder, json_folder):
             for index, col in enumerate(cols):
 
                 raw_value = sheet.cell_value(row, index)
-                if (type(raw_value) == str):
+                if type(raw_value) == str:
                     raw_value = raw_value
 
                 obj[col] = sheet.cell_value(row, index)
@@ -106,10 +108,8 @@ def create_global(excel_folder, json_folder):
     use_sheet(global_book, "Drinks", "drinks.json")
     use_sheet(global_book, "Locations", "locations.json")
     use_sheet(global_book, "People", "people.json")
+    use_sheet(global_book, "Videos", "videos.json")
     print ("")
-
-
-# noinspection PyShadowingNames
 
 
 def create_scenario(jsons_path, file_xlsx):
@@ -129,14 +129,15 @@ def create_scenario(jsons_path, file_xlsx):
     # start at 1 to ignore title line
     for i in range(1, steps_sheet.nrows):
 
-        if steps_sheet.cell_value(i, 3) != "":
+        initial_col = 3
+        if steps_sheet.cell_value(i, initial_col) != "":
             arguments = add_arguments(steps_sheet, {}, i, 7)
 
             steps.append({
-                'name': steps_sheet.cell_value(i, 3),
-                'id': steps_sheet.cell_value(i, 4),
-                'eta': steps_sheet.cell_value(i, 5),
-                'action': steps_sheet.cell_value(i, 6),
+                'name': steps_sheet.cell_value(i, initial_col),
+                'id': steps_sheet.cell_value(i, initial_col + 1),
+                'eta': steps_sheet.cell_value(i, initial_col + 2),
+                'action': steps_sheet.cell_value(i, initial_col + 3),
                 'arguments': arguments
             })
 
@@ -159,13 +160,22 @@ def create_scenario(jsons_path, file_xlsx):
 
     # region speech.json
     speech_sheet = workbook.sheet_by_name('Speech')
-    speech = []
+    speech = {}
 
-    for i in range(1, steps_sheet.nrows):
-        speech.append({
-            "step": speech_sheet.cell_value(i, 0),
-            "toSay": speech_sheet.cell_value(i, 1)
-        })
+    for i in range(2, speech_sheet.nrows):
+        initial_col = 1
+
+        useful_cols = []
+        for col in range(2, speech_sheet.ncols):
+            if speech_sheet.cell_value(i, col) != "":
+                useful_cols.append(col)
+
+        obj = {}
+        for ncol in useful_cols:
+            obj[speech_sheet.cell_value(1, ncol)] = speech_sheet.cell_value(
+                i, ncol)
+        if len(obj) > 0:
+            speech[speech_sheet.cell_value(i, initial_col)] = obj
 
     with open(os.path.join(jsons_path, json_key, 'speech.json'), 'w') as speech_file:
         speech_file.write(json.dumps(speech))
@@ -180,9 +190,9 @@ def create_scenario(jsons_path, file_xlsx):
     nb_rows = var_sheet.nrows
 
     for row in range(1, nb_rows):
-        nb_useful_cols = get_nb_useful_cols(var_sheet, row, 2)
+        useful_cols = get_nb_useful_cols(var_sheet, row, 2)
         obj = {}
-        for col in range(0, nb_useful_cols):
+        for col in range(0, useful_cols):
             obj[str(var_sheet.cell_value(row, col))
             ] = var_sheet.cell_value(row, col + 1)
         variables.append(obj)
