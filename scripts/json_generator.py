@@ -4,8 +4,6 @@ import sys
 
 import xlrd
 
-
-
 scenarios_excels_directory = 'scenarios'
 global_excels_path = 'Global.xlsx'
 
@@ -146,16 +144,6 @@ def create_scenario(jsons_path, file_xlsx):
     if not os.path.exists((os.path.join(jsons_path, json_key))):
         os.mkdir((os.path.join(jsons_path, json_key)))
 
-    with open(os.path.join(jsons_path, json_key, "scenario.json"), 'w') as scenario_file:
-
-        scenario_file.write(json.dumps({
-            'steps': steps,
-            'duration': scenario_duration,
-            'name': scenario_name
-        }))
-        print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
-            "File", scenario_name + "/scenario.json", "OK"))
-
     # endregion
 
     # region speech.json
@@ -177,10 +165,10 @@ def create_scenario(jsons_path, file_xlsx):
         if len(obj) > 0:
             speech[speech_sheet.cell_value(i, initial_col)] = obj
 
-    with open(os.path.join(jsons_path, json_key, 'speech.json'), 'w') as speech_file:
-        speech_file.write(json.dumps(speech))
-        print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
-            "File", scenario_name + "/speech.json", "OK"))
+    # with open(os.path.join(jsons_path, json_key, 'speech.json'), 'w') as speech_file:
+    #     speech_file.write(json.dumps(speech))
+    #     print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
+    #         "File", scenario_name + "/speech.json", "OK"))
 
     # endregion
 
@@ -197,12 +185,27 @@ def create_scenario(jsons_path, file_xlsx):
             ] = var_sheet.cell_value(row, col + 1)
         variables.append(obj)
 
-    with open(os.path.join(jsons_path, json_key, 'variables.json'), 'w') as var_file:
-        var_file.write(json.dumps(variables))
-        print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
-            "File", scenario_name + "/variables.json", "OK"))
+    # with open(os.path.join(jsons_path, json_key, 'variables.json'), 'w') as var_file:
+    #     var_file.write(json.dumps(variables))
+    #     print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
+    #         "File", scenario_name + "/variables.json", "OK"))
 
     # endregion
+
+    for index, step in enumerate(steps):
+        if step['id'] in speech:
+            steps[index]['speech'] = speech[step['id']]
+
+    with open(os.path.join(jsons_path, json_key, "scenario.json"), 'w') as scenario_file:
+
+        scenario_file.write(json.dumps({
+            'steps': steps,
+            'duration': scenario_duration,
+            'name': scenario_name,
+            'variables': variables
+        }))
+        # print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
+        #     "File", scenario_name + "/scenario.json", "OK"))
 
     print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
         "Scenario", scenario_name, "OK"))
