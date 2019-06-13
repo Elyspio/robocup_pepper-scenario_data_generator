@@ -49,7 +49,7 @@ class ExcelGenerator:
                 fh.close()
 
     @staticmethod
-    def init_drive_connection(path_to_credential="./credential.json"):
+    def init_drive_connection(path_to_credential="./credentials.json"):
         """Shows basic usage of the Drive v3 API.
            Prints the names and ids of the first 10 files the user has access to.
            """
