@@ -34,16 +34,12 @@ def add_arguments(sheet, arguments, row, index):
     """
     :param row: the actual row in sheet
     :type row int
-
     :param sheet: the scenario sheet
     :type sheet xlrd.sheet.Sheet
-
     :param arguments: the array that will contain arguments
     :type arguments dict
-
     :param index: the index of the current argument
     :type index int
-
     :rtype dict
     """
 
@@ -51,7 +47,17 @@ def add_arguments(sheet, arguments, row, index):
         key = sheet.cell_value(row, index)
         value = sheet.cell_value(row, index + 1)
         if key != "" and value != "":
-            arguments[key] = value
+            if key in arguments.keys():
+                tab = []
+                old = arguments[key]
+                if type(old) == list:
+                    tab = old
+                else:
+                    tab.append(old)
+                tab.append(value)
+                arguments[key] = tab
+            else:
+                arguments[key] = value
             return add_arguments(sheet, arguments, row, index + 2)
     return arguments
 
@@ -132,6 +138,7 @@ def create_scenario(jsons_path, file_xlsx):
             arguments = add_arguments(steps_sheet, {}, i, 7)
 
             steps.append({
+                'order': steps_sheet.cell_value(i, initial_col - 1),
                 'name': steps_sheet.cell_value(i, initial_col),
                 'id': steps_sheet.cell_value(i, initial_col + 1),
                 'eta': steps_sheet.cell_value(i, initial_col + 2),
@@ -165,11 +172,6 @@ def create_scenario(jsons_path, file_xlsx):
         if len(obj) > 0:
             speech[speech_sheet.cell_value(i, initial_col)] = obj
 
-    # with open(os.path.join(jsons_path, json_key, 'speech.json'), 'w') as speech_file:
-    #     speech_file.write(json.dumps(speech))
-    #     print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
-    #         "File", scenario_name + "/speech.json", "OK"))
-
     # endregion
 
     # region variables.json
@@ -185,11 +187,6 @@ def create_scenario(jsons_path, file_xlsx):
             ] = var_sheet.cell_value(row, col + 1)
         variables.append(obj)
 
-    # with open(os.path.join(jsons_path, json_key, 'variables.json'), 'w') as var_file:
-    #     var_file.write(json.dumps(variables))
-    #     print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
-    #         "File", scenario_name + "/variables.json", "OK"))
-
     # endregion
 
     for index, step in enumerate(steps):
@@ -204,8 +201,6 @@ def create_scenario(jsons_path, file_xlsx):
             'name': scenario_name,
             'variables': variables
         }))
-        # print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
-        #     "File", scenario_name + "/scenario.json", "OK"))
 
     print("{0:10} {1:50} \033[0;32m{2}\033[0;0m".format(
         "Scenario", scenario_name, "OK"))

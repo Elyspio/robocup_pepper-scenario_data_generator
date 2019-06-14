@@ -9,3 +9,5 @@ excels
 # private
 token.pickle
 credentials.json
+# Project exclude paths
+/deployServer/node_modules/

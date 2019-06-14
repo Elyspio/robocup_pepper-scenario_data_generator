@@ -7,25 +7,25 @@ This repo contains Python scripts which create json configuration files that we 
 
 You can use Python 2 or Python 3.
 
-We use .xlsx format to store our data, so you need to install [xlrd](https://pypi.org/project/xlrd/) and [Google API client](https://developers.google.com/drive/api/v3/quickstart/python) on your python installation
+We use Google Sheet store our data, so you need get your credentials [Google API client](https://developers.google.com/drive/api/v3/quickstart/python).
 
 
 
 
 ## Use
 
-> First clone the repo:
+ First clone the repo:
 `git clone https://github.com/Elyspio/robocup_pepper-scenario_data_generator.git data-generator`
  
-> Move to the repo locally:
+ Move to the repo locally:
 `cd data-generator`
 
-> Install dependencies: 
-`pip install -r requirement.txt`
+ Install dependencies: 
+`pip install -r requirements.txt`
 
--  If you don't have root permissions use: `pip install --user requirement.txt`  
+> If you don't have root permissions use: `pip install --user requirement.txt`  
 
-> Then launch json_generator.py:
+ Then launch the script generator.py:
 
 `python ./generator.py`
 
