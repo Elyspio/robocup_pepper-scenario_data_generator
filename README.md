@@ -21,7 +21,7 @@ We use Google Sheet store our data, so you need get your credentials [Google API
 `cd data-generator`
 
  Install dependencies: 
-`pip install -r requirements.txt`
+`pip install -r requirement.txt`
 
 > If you don't have root permissions use: `pip install --user requirement.txt`  
 
