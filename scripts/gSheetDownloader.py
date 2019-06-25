@@ -11,7 +11,7 @@ from googleapiclient.discovery import build
 # If modifying these scopes, delete the file token.pickle.
 from googleapiclient.http import MediaIoBaseDownload
 
-SCOPES = ['https://www.googleapis.com/auth/drive']
+SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 
 
 class ExcelGenerator:

@@ -113,6 +113,7 @@ def create_global(excel_folder, json_folder):
     use_sheet(global_book, "Locations", "locations.json")
     use_sheet(global_book, "People", "people.json")
     use_sheet(global_book, "Videos", "videos.json")
+    use_sheet(global_book, "Images", "images.json")
     print ("")
 
 
@@ -176,16 +177,16 @@ def create_scenario(jsons_path, file_xlsx):
 
     # region variables.json
     var_sheet = workbook.sheet_by_name('Variables')
-    variables = []
+    variables = {}
     nb_rows = var_sheet.nrows
 
     for row in range(1, nb_rows):
         useful_cols = get_nb_useful_cols(var_sheet, row, 2)
         obj = {}
-        for col in range(0, useful_cols):
-            obj[str(var_sheet.cell_value(row, col))
-            ] = var_sheet.cell_value(row, col + 1)
-        variables.append(obj)
+        for col in range(2, useful_cols+1, 2):
+            print(row, col, var_sheet.cell_value(row, col))
+            obj[str(var_sheet.cell_value(row, col))] = var_sheet.cell_value(row, col + 1)
+        variables[var_sheet.cell_value(row, 1)] = obj
 
     # endregion
 
