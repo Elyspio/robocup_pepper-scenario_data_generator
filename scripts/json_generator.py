@@ -1,3 +1,4 @@
+
 import json
 import os
 import sys
@@ -74,7 +75,7 @@ def create_global(excel_folder, json_folder):
 
     def use_sheet(book, sheet_name, json_path):
         """
-        :param book: the book of global.xlsx
+        :param book {xlrd.book.Book}: the book of global.xlsx
         :type book xlrd.book.Book
 
         :param sheet_name: the name of sheet
@@ -114,6 +115,7 @@ def create_global(excel_folder, json_folder):
     use_sheet(global_book, "People", "people.json")
     use_sheet(global_book, "Videos", "videos.json")
     use_sheet(global_book, "Images", "images.json")
+    use_sheet(global_book, "Scenarios", "scenarios.json")
     print ("")
 
 
@@ -184,7 +186,6 @@ def create_scenario(jsons_path, file_xlsx):
         useful_cols = get_nb_useful_cols(var_sheet, row, 2)
         obj = {}
         for col in range(2, useful_cols+1, 2):
-            print(row, col, var_sheet.cell_value(row, col))
             obj[str(var_sheet.cell_value(row, col))] = var_sheet.cell_value(row, col + 1)
         variables[var_sheet.cell_value(row, 1)] = obj
 

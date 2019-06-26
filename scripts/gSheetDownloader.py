@@ -43,7 +43,7 @@ class ExcelGenerator:
                 done = False
                 while done is False:
                     status, done = downloader.next_chunk()
-                    print("Download {0:30} {1:3d}%.".format(f['name'], int(status.progress() * 100)))
+                    print("Download {0:50} {1:3d}%.".format(f['name'], int(status.progress() * 100)))
                 with open(os.path.join(file_path + '.xlsx'), "wb") as excel_file:
                     excel_file.write(fh.getvalue())
                 fh.close()
