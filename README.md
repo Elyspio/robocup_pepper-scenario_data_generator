@@ -24,10 +24,10 @@ We use Google Sheet store our data, so you need get your credentials [Google API
 `pip install -r requirement.txt`
 
 > If you don't have root permissions use: `pip install --user requirement.txt`  
-You need to add a credential.json available for auhorized persons on the drive  of the Team
- Then launch the script generator.py:
 
-`python ./generator.py`
+You need to add a credential.json available for auhorized persons on the drive  of the Team
+
+Then launch the script generator.py: `python ./generator.py`
 
 ### Options
 
