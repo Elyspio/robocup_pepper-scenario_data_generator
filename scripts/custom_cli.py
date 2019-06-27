@@ -1,5 +1,5 @@
 from __future__ import print_function
-import json
+
 import time
 from copy import deepcopy
 from threading import Thread
@@ -34,11 +34,11 @@ Direction.DOWN = Direction("B")
 
 class CustomCLI:
 
-    def __init__(self,main_title,  behaviours):
+    def __init__(self, main_title, behaviours):
         """
         :type behaviours list
         """
-        self.initial_pos = {'x': 2, 'y': 1 }
+        self.initial_pos = {'x': 2, 'y': 1}
 
         self.behaviour_list = behaviours
 
@@ -85,9 +85,9 @@ class CustomCLI:
         Thread(target=self.prevent_stop).start()
 
     def move_cursor(self, direction, nb=1):
-        if(direction == Direction.UP):
+        if (direction == Direction.UP):
             self.cursor_pos['y'] -= nb
-        elif(direction == Direction.DOWN):
+        elif (direction == Direction.DOWN):
             self.cursor_pos['y'] += nb
         for _ in range(nb):
             direction.move_cursor()
@@ -127,12 +127,13 @@ class CustomCLI:
                     self.upper_action()
 
     def downer_action(self, *args):
-        if self.cursor_pos['y'] + 1  < self.map_length + self.initial_pos['y']:
+        if self.cursor_pos['y'] + 1 < self.map_length + self.initial_pos['y']:
             self.move_cursor(Direction.DOWN)
             behaviour = self.get_key_option()
             if 'title' in behaviour['flags']:
                 self.downer_action()
         pass
+
     def space_action(self, *args):
         key = self.get_key_option()
 
@@ -153,7 +154,7 @@ class CustomCLI:
                 todo['callback']()
 
             for checked in self.checked_cases:
-                self.move_to(checked['x'] , checked['y']    )
+                self.move_to(checked['x'], checked['y'])
                 print(unchecked_char, end="")
 
             # clear lists
@@ -181,7 +182,7 @@ class CustomCLI:
         :rtype str
         :return: the key in behaviour list of the behaviour where carret is.
         """
-        return self.key_map_listed[self.cursor_pos['y'] - self.offset['y'] -1 ]
+        return self.key_map_listed[self.cursor_pos['y'] - self.offset['y'] - 1]
 
     def debug(self, str):
         print("\x1b[s", end="")
@@ -189,6 +190,7 @@ class CustomCLI:
         print(str, end="\x1b[u")
 
         pass
+
 
 class BehaviorBuilder:
     def __init__(self, main):

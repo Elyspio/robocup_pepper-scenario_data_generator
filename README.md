@@ -1,4 +1,4 @@
-# Robocup Pepper scenario data generator
+# RoboCup Pepper scenario data generator
 
 This repo contains Python scripts which create json configuration files that we use in [General Manager](https://github.com/jacques-saraydaryan/robocup_pepper-general_mng) and [HRI](https://github.com/Elyspio/robocup_pepper-hri_meta).
 

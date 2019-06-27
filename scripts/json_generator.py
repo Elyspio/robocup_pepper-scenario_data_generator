@@ -1,4 +1,3 @@
-
 import json
 import os
 import sys
@@ -71,7 +70,7 @@ def get_nb_useful_cols(sheet, row=0, col=0):
 
 def create_global(excel_folder, json_folder):
     global_book = xlrd.open_workbook(os.path.join(excel_folder, global_excels_path))
-    print ("--- Global ---")
+    print("--- Global ---")
 
     def use_sheet(book, sheet_name, json_path):
         """
@@ -88,7 +87,7 @@ def create_global(excel_folder, json_folder):
         data = []
         cols = []
 
-        nb_cols = get_nb_useful_cols(sheet, 0, 0)
+        nb_cols = get_nb_useful_cols(sheet, 1, 0)
 
         for col in range(0, nb_cols):
             cols.append(sheet.cell_value(1, col))
@@ -114,9 +113,9 @@ def create_global(excel_folder, json_folder):
     use_sheet(global_book, "Locations", "locations.json")
     use_sheet(global_book, "People", "people.json")
     use_sheet(global_book, "Videos", "videos.json")
-    use_sheet(global_book, "Images", "images.json")
+    use_sheet(global_book, "Logos", "images.json")
     use_sheet(global_book, "Scenarios", "scenarios.json")
-    print ("")
+    print("")
 
 
 def create_scenario(jsons_path, file_xlsx):
@@ -185,7 +184,7 @@ def create_scenario(jsons_path, file_xlsx):
     for row in range(1, nb_rows):
         useful_cols = get_nb_useful_cols(var_sheet, row, 2)
         obj = {}
-        for col in range(2, useful_cols+1, 2):
+        for col in range(2, useful_cols + 1, 2):
             obj[str(var_sheet.cell_value(row, col))] = var_sheet.cell_value(row, col + 1)
         variables[var_sheet.cell_value(row, 1)] = obj
 
@@ -215,7 +214,7 @@ class JsonGenerator:
             os.mkdir(json_folder)
 
         create_global(excel_folder, json_folder)
-        print ("--- Scenarios --- ")
+        print("--- Scenarios --- ")
         for scenario_file in [f for f in os.listdir(os.path.join(excel_folder, scenarios_excels_directory)) if
                               f.endswith('.xlsx') and not f.startswith("~")]:
             create_scenario(json_folder, os.path.join(excel_folder, scenarios_excels_directory, scenario_file))

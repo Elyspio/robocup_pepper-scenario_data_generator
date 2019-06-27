@@ -24,9 +24,7 @@ if __name__ == '__main__':
         ExcelGenerator(root_folder_id=args.online, excel_path=DEFAULT_EXCEL_PATH)
         JsonGenerator(DEFAULT_EXCEL_PATH, args.output)
         if not args.store:
-            print ("Deleting temporary excel files")
+            print("Deleting temporary excel files")
             shutil.rmtree(DEFAULT_EXCEL_PATH)
-
-
 
     print("Generation complete, see the folder", args.output)
