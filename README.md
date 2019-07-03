@@ -7,10 +7,7 @@ This repo contains Python scripts which create json configuration files that we 
 
 You can use Python 2 or Python 3.
 
-We use Google Sheet store our data, so you need get your credentials [Google API client](https://developers.google.com/drive/api/v3/quickstart/python).
-
-
-
+We use Google Drive store our data, so make sure you have a internet access (required for the first run)
 
 ## Use
 
